@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+
+    <dbname value="zhanma" />
+
+
+    <version value="1" />
+
+
+    <list>
+        <mapping class="com.huruwo.zhanma.db.dbmodel.TotalTable"></mapping>
+        <mapping class="com.huruwo.zhanma.db.dbmodel.ItemTable"></mapping>
+    </list>
+
+
+
+</litepal>

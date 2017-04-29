@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/four_dp"
+    android:layout_marginLeft="@dimen/space"
+    android:layout_marginRight="@dimen/space"
+    android:layout_marginTop="@dimen/four_dp"
+    android:clickable="false"
+    app:cardBackgroundColor="@color/cardview_light_background">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:id="@+id/movie_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:padding="@dimen/four_dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <TextView
+            android:id="@+id/name_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="@dimen/text_size_18sp"
+            android:layout_margin="4dp"
+            />
+
+        <com.huruwo.zhanma.view.widget.TagGroup
+            android:layout_below="@+id/name_text"
+            android:id="@+id/questionbank_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            ></com.huruwo.zhanma.view.widget.TagGroup>
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

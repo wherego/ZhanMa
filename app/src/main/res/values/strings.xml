@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">斩码</string>
+    <string name="app_name_phonetic">ZhanMa</string>
+    <string name="splash_string">千里之行\n始于足下</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="tab_practice">题库练习</string>
+    <string name="tab_review">专题复习</string>
+    <string name="start">开始刷题</string>
+    <string name="navigation_theme">主题</string>
+    <string name="navigation_settings">设置</string>
+    <string name="navigation_share">分享</string>
+    <string name="navigation_evaluate">评价</string>
+    <string name="navigation_about">关于</string>
+    <string name="menu_talenttree">天赋树</string>
+    <string name="error_topic">错误题集</string>
+    <string name="simple_topic">简单题集</string>
+    <string name="share_out_description">"简影讯，简约多彩影讯。速查热门电影影讯、评分和票房，即看即走。下载地址：https://fir.im/jyx"</string>
+    <string name="about_app">关于软件</string>
+    <string name="str_about_app">斩码是为了方便大家随时复习各类知识点所开发的软件。</string>
+    <string name="about_me">关于本人</string>
+    <string name="str_about_me">移动开发爱好者，开源爱好者。</string>
+    <string name="contact_me">联系本人</string>
+    <string name="QQ">1458476478</string>
+    <string name="github">https://github.com/HuRuWo</string>
+    <string name="e_mail">1458476478@qq.com</string>
+    <string name="statement">声明</string>
+    <string name="str_statement">软件内置题库内容均来自互联网公开的内容，本人不保证完全正确。内容如果有侵权行为，请联系本人。</string>
+
+</resources>
