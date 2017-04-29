@@ -3,6 +3,7 @@ package com.huruwo.zhanma;
 import org.litepal.LitePalApplication;
 
 import cn.bmob.v3.Bmob;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by Administrator on 2017/4/10.
@@ -37,5 +38,8 @@ public class MyApplication extends LitePalApplication {
 //		Bmob.initialize(config);
         //第二：默认初始化
         Bmob.initialize(this, APPID, "demo");
+
+        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);     		// 初始化 JPush
     }
 }

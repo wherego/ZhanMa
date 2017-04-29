@@ -2,6 +2,7 @@ package com.huruwo.zhanma.view.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,9 +28,11 @@ import com.huruwo.zhanma.R;
 import com.huruwo.zhanma.view.adapter.TabPagerAdapter;
 import com.huruwo.zhanma.view.fragment.QuestionsListFragment;
 import com.huruwo.zhanma.view.fragment.TopicListFragment;
+import com.huruwo.zhanma.view.receiver.MessageReceiver;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,6 +53,7 @@ public class MainActivity extends BaseActivity
     //activity启动函数
     private long mStartMills;
     private boolean mIsAnimatingOut = false;
+    public static boolean isForeground = false;
 
     public static void navigation(Activity activity) {
         activity.startActivity(new Intent(activity, MainActivity.class));
@@ -63,6 +67,11 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        // 初始化 JPush。如果已经初始化，但没有登录成功，则执行重新登录。
+        JPushInterface.init(getApplicationContext());
+
+        //注册自定义的监听
+        registerMessageReceiver();  // used for receive msg
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
@@ -225,6 +234,45 @@ public class MainActivity extends BaseActivity
             marginBottom = ((ViewGroup.MarginLayoutParams) layoutParams).bottomMargin;
         }
         return marginBottom;
+    }
+
+    @Override
+    protected void onResume() {
+        isForeground = true;
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+
+
+    @Override
+    protected void onPause() {
+        isForeground = false;
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //解除注册
+        unregisterReceiver(mMessageReceiver);
+    }
+
+
+    //for receive customer msg from jpush server
+    private MessageReceiver mMessageReceiver;
+    public static final String MESSAGE_RECEIVED_ACTION = "com.huruwo.zhanma.MESSAGE_RECEIVED_ACTION";
+    public static final String KEY_TITLE = "title";
+    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_EXTRAS = "extras";
+
+    public void registerMessageReceiver() {
+        mMessageReceiver = new MessageReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+        filter.addAction(MESSAGE_RECEIVED_ACTION);
+        registerReceiver(mMessageReceiver, filter);
     }
 
 

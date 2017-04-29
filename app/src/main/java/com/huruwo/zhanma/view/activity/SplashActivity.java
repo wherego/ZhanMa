@@ -24,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by Administrator on 2017/4/3.
@@ -69,6 +70,10 @@ public class SplashActivity extends BaseActivity {
 
 
     }
+
+
+
+
 
     private void inidata() {
 
