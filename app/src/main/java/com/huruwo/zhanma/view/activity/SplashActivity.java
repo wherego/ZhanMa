@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,14 +18,11 @@ import android.widget.TextView;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.flaviofaria.kenburnsview.RandomTransitionGenerator;
 import com.huruwo.zhanma.R;
-import com.huruwo.zhanma.db.bmobmodel.BmItemTable;
-import com.huruwo.zhanma.db.bmobmodel.BmTotalTable;
+
+import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.SaveListener;
-import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by Administrator on 2017/4/3.
@@ -43,7 +41,7 @@ public class SplashActivity extends BaseActivity {
     TextView tvAppnamePhonetic;
     @BindView(R.id.im_logo)
     ImageView imLogo;
-    private Handler mHandler;
+    private final MyHandler mHandler = new MyHandler(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +65,6 @@ public class SplashActivity extends BaseActivity {
 //                jumpToMain();
 //            }
 //        });
-
 
     }
 
@@ -142,7 +139,6 @@ public class SplashActivity extends BaseActivity {
 
         });
 
-        mHandler = new Handler();
 
     }
     @TargetApi(19)
@@ -174,37 +170,32 @@ public class SplashActivity extends BaseActivity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                //启动函数
-                MainActivity.navigation(SplashActivity.this);
+                mHandler.sendEmptyMessage(0);
             }
-        }, 300);
-
-
+        },300);
     }
 
-    /**
-     * 插入对象
-     */
-    private void InsertData() {
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 
-        final BmTotalTable bmTotalTable = new BmTotalTable();
-        bmTotalTable.setObjectId("e175c8e116");
-                    BmItemTable businessAdvice = new BmItemTable();
-                    businessAdvice.setContent("阿德伍德沃德驱动器");
-                    businessAdvice.setTitle("打算的大");
-                    businessAdvice.setState(0);
-                    businessAdvice.setBmTotalTable(bmTotalTable);
-                    businessAdvice.save(new SaveListener<String>() {
-                        @Override
-                        public void done(String s, BmobException e) {
-                            if (e == null) {
-                                showToast("添加成功");
-                                finish();
-                            } else {
-                                showToast(e.getMessage());
-                            }
-                        }
-                    });
+    //自定义静态handler防止内存泄漏
+    private static class MyHandler extends Handler {
+        private final WeakReference<SplashActivity> mWpActivity;
+
+        public MyHandler(SplashActivity activity) {
+            mWpActivity = new WeakReference<SplashActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            SplashActivity activity = mWpActivity.get();
+            if (activity != null) {
+                // ...
+                MainActivity.navigation(activity);
+            }
+        }
     }
 
 }

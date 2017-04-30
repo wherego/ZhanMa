@@ -1,5 +1,7 @@
 package com.huruwo.zhanma;
 
+import com.squareup.leakcanary.LeakCanary;
+
 import org.litepal.LitePalApplication;
 
 import cn.bmob.v3.Bmob;
@@ -41,5 +43,12 @@ public class MyApplication extends LitePalApplication {
 
         JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);     		// 初始化 JPush
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
     }
 }
